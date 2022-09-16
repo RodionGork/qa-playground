@@ -1,0 +1,62 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Members of Sad Alcoholics Club</title>
+  <script src="./s/jquery.min.js"></script>
+  <link rel="stylesheet" href="./s/common.css"/>
+</head>
+<body>
+
+<center>
+
+<h3>Members of Sad Alcoholics Club</h3>
+
+<p><em><a id="logout" href="/index.html">Logout</a></em></p>
+
+<table border="1" id="members">
+  <thead>
+    <tr><th>Id</th><th>Username</th><th>Email</th></tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+
+</center>
+
+<script>
+$(() => {
+    if (!sessionStorage['token']) {
+        alert('You are not logged in!');
+        location.href = '/index.html';
+    }
+
+    setTimeout(refresh, 10);
+    setInterval(refresh, 3100);
+
+    $('#logout').click(() => { sessionStorage.removeItem('token') });
+
+    function refresh() {
+        $.ajax({
+            type: 'POST',
+            url: '/api.php/get-members',
+            headers: {'X-Auth-Token': sessionStorage['token']},
+            data: JSON.stringify({}),
+            success: (resp) => { updateTable(JSON.parse(resp)); }
+        });
+    }
+
+    function updateTable(res) {
+        var tbody = $('#members tbody');
+        tbody.empty();
+        for (var i = 0; i < res.length; i++) {
+            var row = res[i];
+            $('<tr><td>' + row[0] + '</td><td>' + row[1] + '</td><td>' + row[2] + '</td></tr>').appendTo(tbody);
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>

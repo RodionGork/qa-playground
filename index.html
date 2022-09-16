@@ -1,0 +1,98 @@
+<!doctype html>
+
+<html>
+<head>
+  <title>Sad Alcoholics Club</title>
+  <script src="./s/jquery.min.js"></script>
+  <link rel="stylesheet" href="./s/common.css"/>
+</head>
+<body>
+
+<center>
+
+<h1>Sad Alcoholics Club</h1>
+
+<p><em>Don't mind the design (or its absence) - just try to log in</em></p>
+
+<input id="username" placeholder="username"/>
+<br/><br/>
+<input id="password" type="password" placeholder="password"/>
+<br/><br/>
+
+<div id="enter-normal">
+
+<button id="enter">Enter</button>
+<br/><br/>
+<a id="want-register" href="#">want to register?</a>
+
+</div>
+
+<div id="registration" class="hidden">
+
+<input id="password2" type="password" placeholder="re-type password"/>
+<br/><br/>
+<input id="email" placeholder="email"/>
+<br/><br/>
+<button id="register">Register</button>
+
+</div>
+
+</center>
+
+<script>
+$(() => {
+    $.ajaxSetup({contentType: 'application/json', error: onApiError});
+
+    $('#want-register').click((e) => {
+        $('#registration').show();
+        $('#enter-normal').hide();
+        e.preventDefault();
+    });
+
+    $('#enter').click(() => {
+        $.ajax({
+            type: 'POST',
+            url: '/api.php/get-token',
+            data: JSON.stringify({user: $('#username').val(), pwd: $('#password').val()}),
+            success: (resp) => { loginAttempted(JSON.parse(resp)); }
+        });
+    });
+
+    $('#register').click(() => {
+        $.ajax({
+            type: 'POST',
+            url: '/api.php/register',
+            data: JSON.stringify({user: $('#username').val(), pwd: $('#password').val(),
+                pwd2: $('#password2').val(), email: $('#email').val()}),
+            success: (resp) => { registerAttempted(JSON.parse(resp)); }
+        });
+    });
+    
+    function loginAttempted(resp) {
+        if (resp['error']) {
+            alert(resp['error']);
+            return;
+        }
+        sessionStorage['token'] = resp['token'];
+        location.href = '/members.html';
+    }
+    
+    function registerAttempted(resp) {
+        if (resp['error']) {
+            alert(resp['error']);
+            return;
+        }
+        alert('Registration successful!\n\nTry to login!');
+        location.href = '/index.html';
+    }
+    
+    function onApiError(r, stat, e) {
+        console.log('Server error: ' + e);
+        alert('Server error');
+    }
+});
+
+</script>
+
+</body>
+</html>
