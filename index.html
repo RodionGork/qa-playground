@@ -3,8 +3,10 @@
 <html>
 <head>
   <title>Sad Alcoholics Club</title>
-  <script src="./s/jquery.min.js"></script>
+  <link rel="stylesheet" href="./s/bs.css"/>
   <link rel="stylesheet" href="./s/common.css"/>
+  <script src="./s/jquery.min.js"></script>
+  <script src="./s/bs.js"></script>
 </head>
 <body>
 
@@ -14,14 +16,14 @@
 
 <p><em>Don't mind the design (or its absence) - just try to log in</em></p>
 
-<input id="username" placeholder="username"/>
-<br/><br/>
-<input id="password" type="password" placeholder="password"/>
-<br/><br/>
+<input id="username" placeholder="username" class="form-control"/>
+<br/>
+<input id="password" type="password" placeholder="password" class="form-control"/>
+<br/>
 
 <div id="enter-normal">
 
-<button id="enter">Enter</button>
+<button id="enter" class="btn btn-primary">Enter</button>
 <br/><br/>
 <a id="want-register" href="#">want to register?</a>
 
@@ -29,11 +31,11 @@
 
 <div id="registration" class="hidden">
 
-<input id="password2" type="password" placeholder="re-type password"/>
-<br/><br/>
-<input id="email" placeholder="email"/>
-<br/><br/>
-<button id="register">Register</button>
+<input id="password2" type="password" placeholder="re-type password" class="form-control"/>
+<br/>
+<input id="email" placeholder="email" class="form-control"/>
+<br/>
+<button id="register" class="btn btn-success">Register</button>
 
 </div>
 
