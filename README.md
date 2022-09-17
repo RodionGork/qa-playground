@@ -13,9 +13,10 @@ intentional (and perhaps unintentional) bugs!
 
 3. Open the console (command line) window and change directory to project folder.
 
-4. Launch the docker container with command `docker run --rm -p 8008:80 --name qa-playground php:7.4-apache`. First
-    time it takes some time to download necessary docker image, on next it launches immediately. You'll observe here server
-    logs after launch.
+4. Launch the docker container with command  
+    `docker run --rm -p 8008:80 -v $(pwd):/var/www/html --name qa-playground php:7.4-apache`.  
+    First time it takes some time to download necessary docker image, on next it launches immediately.
+    You'll observe here server logs after launch.
 
 5. Switch to your preferred internet browser and navigate to [http://localhost:8008/](http://localhost:8008).
 
